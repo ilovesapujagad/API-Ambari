@@ -139,7 +139,7 @@ def hdfsBytesWrite():
 
 @app.get("/hdfs/gctime")
 def hdfsGCTime():
-    url = 'http:/10.207.26.20:8080/api/v1/clusters/gudanggaram/services/HDFS/components/DATANODE?fields=host_components/metrics/jvm/gcTimeMillis&format=null_padding&_=1669268400267'
+    url = 'http://10.207.26.20:8080/api/v1/clusters/gudanggaram/services/HDFS/components/DATANODE?fields=host_components/metrics/jvm/gcTimeMillis&format=null_padding&_=1671422921134'
     username = "admin"
     password = "admin"
     response = requests.get(url, auth = HTTPBasicAuth(username, password))
