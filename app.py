@@ -23,16 +23,16 @@ def hello_geek():
 @app.get("/hosts")
 def hosts():
     url = 'http://10.207.26.20:8080/api/v1/clusters/gudanggaram/hosts?fields=Hosts/rack_info,Hosts/host_name,Hosts/maintenance_state,Hosts/public_host_name,Hosts/cpu_count,Hosts/ph_cpu_count,alerts_summary,Hosts/host_status,Hosts/host_state,Hosts/last_heartbeat_time,Hosts/ip,host_components/HostRoles/state,host_components/HostRoles/maintenance_state,host_components/HostRoles/stale_configs,host_components/HostRoles/service_name,host_components/HostRoles/display_name,host_components/HostRoles/desired_admin_state,host_components/metrics/dfs/namenode/ClusterId,host_components/metrics/dfs/FSNamesystem/HAState,Hosts/total_mem,stack_versions/HostStackVersions,stack_versions/repository_versions/RepositoryVersions/repository_version,stack_versions/repository_versions/RepositoryVersions/id,stack_versions/repository_versions/RepositoryVersions/display_name&minimal_response=true,host_components/logging&page_size=10&from=0&sortBy=Hosts/host_name.asc&_=1671421446029'
-    username = "sapujagad"
-    password = "kayangan"
+    username = "admin"
+    password = "admin"
     response = requests.get(url, auth = HTTPBasicAuth(username, password))
     return response.json()
 
 @app.get("/host/memory")
 def hostMem():
     url = 'http://10.207.26.20:8080/api/v1/clusters/gudanggaram/hosts?fields=metrics/memory/mem_total,metrics/memory/mem_free,metrics/memory/mem_cached'
-    username = "sapujagad"
-    password = "kayangan"
+    username = "admin"
+    password = "admin"
     response = requests.get(url, auth = HTTPBasicAuth(username, password))
 
     x = response.json()
@@ -41,8 +41,8 @@ def hostMem():
 @app.get("/host/cpu")
 def hostCPU():
     url = 'http://10.207.26.20:8080/api/v1/clusters/gudanggaram/hosts?fields=metrics/cpu/cpu_wio&_=1671421419180'
-    username = "sapujagad"
-    password = "kayangan"
+    username = "admin"
+    password = "admin"
     response = requests.get(url, auth = HTTPBasicAuth(username, password))
 
     x = response.json()
@@ -51,8 +51,8 @@ def hostCPU():
 @app.get("/host/disk")
 def hostDisk():
     url = 'http://10.207.26.20:8080/api/v1/clusters/gudanggaram/hosts?fields=metrics/disk/disk_free,metrics/disk/disk_total&_=1671421419194'
-    username = "sapujagad"
-    password = "kayangan"
+    username = "admin"
+    password = "admin"
     response = requests.get(url, auth = HTTPBasicAuth(username, password))
 
     x = response.json()
@@ -61,8 +61,8 @@ def hostDisk():
 @app.get("/hive/summary")
 def hive():
     url = 'http://10.207.26.20:8080/api/v1/clusters/gudanggaram/components/?ServiceComponentInfo/component_name=APP_TIMELINE_SERVER%7CServiceComponentInfo/category.in(MASTER,CLIENT)&fields=ServiceComponentInfo/service_name,host_components/HostRoles/display_name&minimal_response=true&_=1667968440999'
-    username = "sapujagad"
-    password = "kayangan"
+    username = "admin"
+    password = "admin"
     response = requests.get(url, auth = HTTPBasicAuth(username, password))
 
     x = response.json()
@@ -80,8 +80,8 @@ def hive():
 @app.post("/hdfs/rename")
 def hdfsRename():
     url = 'http://10.207.26.20:8080/api/v1/views/FILES/versions/1.0.0/instances/hdfs_viewer/resources/files/fileops/rename'
-    username = "sapujagad"
-    password = "kayangan"
+    username = "admin"
+    password = "admin"
     data = request.get_json()
     response = requests.post(url,json = data, auth = HTTPBasicAuth(username, password))
    
@@ -91,8 +91,8 @@ def hdfsRename():
 def urlDownload(path):
     extensions = ['.png','jpg','jpeg','pdf', '.doc','.docx', '.xls','xlsx','.csv', '.tsv']
     if all(ext not in path for ext in extensions):
-        username = "sapujagad"
-        password = "kayangan"
+        username = "admin"
+        password = "admin"
         url = 'http://10.207.26.20:8080/api/v1/views/FILES/versions/1.0.0/instances/hdfs_viewer/resources/files/download/zip/generate-link'
         #data = request.get_json()
         data = {"download":True,
@@ -130,8 +130,8 @@ def hdfsDownload(path):
 @app.get("/hdfs/bytesw")
 def hdfsBytesWrite():
     url = 'http://10.207.26.20:8080/api/v1/clusters/gudanggaram/services/HDFS/components/DATANODE?fields=host_components/metrics/dfs/datanode/bytes_written&format=null_padding&_=1669268400225'
-    username = "sapujagad"
-    password = "kayangan"
+    username = "admin"
+    password = "admin"
     response = requests.get(url, auth = HTTPBasicAuth(username, password))
 
     x = response.json()
@@ -140,8 +140,8 @@ def hdfsBytesWrite():
 @app.get("/hdfs/gctime")
 def hdfsGCTime():
     url = 'http:/10.207.26.20:8080/api/v1/clusters/gudanggaram/services/HDFS/components/DATANODE?fields=host_components/metrics/jvm/gcTimeMillis&format=null_padding&_=1669268400267'
-    username = "sapujagad"
-    password = "kayangan"
+    username = "admin"
+    password = "admin"
     response = requests.get(url, auth = HTTPBasicAuth(username, password))
 
     x = response.json()
@@ -150,8 +150,8 @@ def hdfsGCTime():
 @app.get("/hdfs/memuse")
 def hdfsMemUsed():
     url = 'http://10.207.26.20:8080/api/v1/clusters/gudanggaram/services/HDFS/components/DATANODE?fields=host_components/metrics/jvm/memHeapUsedM&format=null_padding&_=1669268400291'
-    username = "sapujagad"
-    password = "kayangan"
+    username = "admin"
+    password = "admin"
     response = requests.get(url, auth = HTTPBasicAuth(username, password))
 
     x = response.json()
@@ -160,8 +160,8 @@ def hdfsMemUsed():
 @app.get("/hdfs/memcommit")
 def hdfsMemCommit():
     url = 'http://10.207.26.20:8080/api/v1/clusters/gudanggaram/services/HDFS/components/DATANODE?fields=host_components/metrics/jvm/memHeapCommittedM&format=null_padding&_=1669268400306'
-    username = "sapujagad"
-    password = "kayangan"
+    username = "admin"
+    password = "admin"
     response = requests.get(url, auth = HTTPBasicAuth(username, password))
 
     x = response.json()
@@ -170,8 +170,8 @@ def hdfsMemCommit():
 @app.get("/hdfs/processdisk")
 def hdfsProcessDisk():
     url = 'http://10.207.26.20:8080/api/v1/clusters/gudanggaram/services/HDFS/components/DATANODE?fields=host_components/metrics/dfs/datanode/bytes_read,host_components/metrics/dfs/datanode/bytes_written,host_components/metrics/dfs/datanode/TotalReadTime,host_components/metrics/dfs/datanode/TotalWriteTime&format=null_padding&_=1669268400419'
-    username = "sapujagad"
-    password = "kayangan"
+    username = "admin"
+    password = "admin"
     response = requests.get(url, auth = HTTPBasicAuth(username, password))
 
     x = response.json()
@@ -180,8 +180,8 @@ def hdfsProcessDisk():
 @app.get("/hdfs/processnet")
 def hdfsProcessNet():
     url = 'http://10.207.26.20:8080/api/v1/clusters/gudanggaram/services/HDFS/components/DATANODE?fields=host_components/metrics/dfs/datanode/RemoteBytesRead,host_components/metrics/dfs/datanode/reads_from_remote_client,host_components/metrics/dfs/datanode/RemoteBytesWritten,host_components/metrics/dfs/datanode/writes_from_remote_client&format=null_padding&_=1669268400463'
-    username = "sapujagad"
-    password = "kayangan"
+    username = "admin"
+    password = "admin"
     response = requests.get(url, auth = HTTPBasicAuth(username, password))
 
     x = response.json()
@@ -190,8 +190,8 @@ def hdfsProcessNet():
 @app.get("/hdfs/spaceutil")
 def hdfsSpaceUtil():
     url = 'http://10.207.26.20:8080/api/v1/clusters/gudanggaram/services/HDFS/components/DATANODE?fields=host_components/metrics/FSDatasetState/org/apache/hadoop/hdfs/server/datanode/fsdataset/impl/FsDatasetImpl/Remaining,host_components/metrics/dfs/datanode/Capacity&format=null_padding&_=1669268400383'
-    username = "sapujagad"
-    password = "kayangan"
+    username = "admin"
+    password = "admin"
     response = requests.get(url, auth = HTTPBasicAuth(username, password))
 
     x = response.json()
@@ -200,8 +200,8 @@ def hdfsSpaceUtil():
 @app.get("/hdfs/bytesr")
 def hdfsBytesRead():
     url = 'http://10.207.26.20:8080/api/v1/clusters/gudanggaram/services/HDFS/components/DATANODE?fields=host_components/metrics/dfs/datanode/bytes_read&format=null_padding&_=1669268400355'
-    username = "sapujagad"
-    password = "kayangan"
+    username = "admin"
+    password = "admin"
     response = requests.get(url, auth = HTTPBasicAuth(username, password))
 
     x = response.json()
