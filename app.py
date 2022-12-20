@@ -27,16 +27,12 @@ def hello_geek():
 @app.get("/hosts")
 def hosts():
     url = 'http://'+baseurl+':8080/api/v1/clusters/'+cluster+'/hosts?fields=Hosts/rack_info,Hosts/host_name,Hosts/maintenance_state,Hosts/public_host_name,Hosts/cpu_count,Hosts/ph_cpu_count,alerts_summary,Hosts/host_status,Hosts/host_state,Hosts/last_heartbeat_time,Hosts/ip,host_components/HostRoles/state,host_components/HostRoles/maintenance_state,host_components/HostRoles/stale_configs,host_components/HostRoles/service_name,host_components/HostRoles/display_name,host_components/HostRoles/desired_admin_state,host_components/metrics/dfs/namenode/ClusterId,host_components/metrics/dfs/FSNamesystem/HAState,Hosts/total_mem,stack_versions/HostStackVersions,stack_versions/repository_versions/RepositoryVersions/repository_version,stack_versions/repository_versions/RepositoryVersions/id,stack_versions/repository_versions/RepositoryVersions/display_name&minimal_response=true,host_components/logging&page_size=10&from=0&sortBy=Hosts/host_name.asc&_=1671421446029'
-    username = "admin"
-    password = "admin"
     response = requests.get(url, auth = HTTPBasicAuth(username, password))
     return response.json()
 
 @app.get("/host/memory")
 def hostMem():
     url = 'http://'+baseurl+':8080/api/v1/clusters/'+cluster+'/hosts?fields=metrics/memory/mem_total,metrics/memory/mem_free,metrics/memory/mem_cached'
-    username = "admin"
-    password = "admin"
     response = requests.get(url, auth = HTTPBasicAuth(username, password))
 
     x = response.json()
@@ -45,8 +41,6 @@ def hostMem():
 @app.get("/host/cpu")
 def hostCPU():
     url = 'http://'+baseurl+':8080/api/v1/clusters/'+cluster+'/hosts?fields=metrics/cpu/cpu_wio&_=1671421419180'
-    username = "admin"
-    password = "admin"
     response = requests.get(url, auth = HTTPBasicAuth(username, password))
 
     x = response.json()
@@ -55,8 +49,6 @@ def hostCPU():
 @app.get("/host/disk")
 def hostDisk():
     url = 'http://'+baseurl+':8080/api/v1/clusters/'+cluster+'/hosts?fields=metrics/disk/disk_free,metrics/disk/disk_total&_=1671421419194'
-    username = "admin"
-    password = "admin"
     response = requests.get(url, auth = HTTPBasicAuth(username, password))
 
     x = response.json()
@@ -65,8 +57,6 @@ def hostDisk():
 @app.get("/hive/summary")
 def hive():
     url = 'http:/'+baseurl+':8080/api/v1/clusters/'+cluster+'/components/?ServiceComponentInfo/component_name=APP_TIMELINE_SERVER%7CServiceComponentInfo/category.in(MASTER,CLIENT)&fields=ServiceComponentInfo/service_name,host_components/HostRoles/display_name&minimal_response=true&_=1667968440999'
-    username = "admin"
-    password = "admin"
     response = requests.get(url, auth = HTTPBasicAuth(username, password))
 
     x = response.json()
@@ -84,8 +74,6 @@ def hive():
 @app.post("/hdfs/rename")
 def hdfsRename():
     url = 'http://'+baseurl+':8080/api/v1/views/FILES/versions/1.0.0/instances/hdfs_viewer/resources/files/fileops/rename'
-    username = "admin"
-    password = "admin"
     data = request.get_json()
     response = requests.post(url,json = data, auth = HTTPBasicAuth(username, password))
    
@@ -95,8 +83,6 @@ def hdfsRename():
 def urlDownload(path):
     extensions = ['.png','jpg','jpeg','pdf', '.doc','.docx', '.xls','xlsx','.csv', '.tsv']
     if all(ext not in path for ext in extensions):
-        username = "admin"
-        password = "admin"
         url = 'http://'+baseurl+':8080/api/v1/views/FILES/versions/1.0.0/instances/hdfs_viewer/resources/files/download/zip/generate-link'
         #data = request.get_json()
         data = {"download":True,
@@ -117,8 +103,6 @@ def urlDownload(path):
         
         return send_file(memory_file, attachment_filename=last, as_attachment=True)
     else:   
-        username = "sapujagad"
-        password = "kayangan" 
         url = 'http://'+baseurl+':80800/api/v1/views/FILES/versions/1.0.0/instances/hdfs_viewer/resources/files/download/browse?path=/' + path + '&download=true'
         response = requests.get(url, auth = HTTPBasicAuth(username, password))
         x = path 
@@ -134,18 +118,13 @@ def hdfsDownload(path):
 @app.get("/hdfs/bytesw")
 def hdfsBytesWrite():
     url = 'http://'+baseurl+':8080/api/v1/clusters/'+cluster+'/services/HDFS/components/DATANODE?fields=host_components/metrics/dfs/datanode/bytes_written&format=null_padding&_=1669268400225'
-    username = "admin"
-    password = "admin"
     response = requests.get(url, auth = HTTPBasicAuth(username, password))
-
     x = response.json()
     return x
 
 @app.get("/hdfs/gctime")
 def hdfsGCTime():
-    url = 'http://10.207.26.20:8080/api/v1/clusters/gudanggaram/services/HDFS/components/DATANODE?fields=host_components/metrics/jvm/gcTimeMillis&format=null_padding&_=1671422921134'
-    username = "admin"
-    password = "admin"
+    url = 'http://'+baseurl+':8080/api/v1/clusters/'+cluster+'/services/HDFS/components/DATANODE?fields=host_components/metrics/jvm/gcTimeMillis&format=null_padding&_=1671422921134'
     response = requests.get(url, auth = HTTPBasicAuth(username, password))
 
     x = response.json()
@@ -153,9 +132,7 @@ def hdfsGCTime():
 
 @app.get("/hdfs/memuse")
 def hdfsMemUsed():
-    url = 'http://10.207.26.20:8080/api/v1/clusters/gudanggaram/services/HDFS/components/DATANODE?fields=host_components/metrics/jvm/memHeapUsedM&format=null_padding&_=1669268400291'
-    username = "admin"
-    password = "admin"
+    url = 'http://'+baseurl+':8080/api/v1/clusters/'+cluster+'/services/HDFS/components/DATANODE?fields=host_components/metrics/jvm/memHeapUsedM&format=null_padding&_=1669268400291'
     response = requests.get(url, auth = HTTPBasicAuth(username, password))
 
     x = response.json()
@@ -163,7 +140,7 @@ def hdfsMemUsed():
 
 @app.get("/hdfs/memcommit")
 def hdfsMemCommit():
-    url = 'http://10.207.26.20:8080/api/v1/clusters/gudanggaram/services/HDFS/components/DATANODE?fields=host_components/metrics/jvm/memHeapCommittedM&format=null_padding&_=1669268400306'
+    url = 'http://'+baseurl+':8080/api/v1/clusters/'+cluster+'/services/HDFS/components/DATANODE?fields=host_components/metrics/jvm/memHeapCommittedM&format=null_padding&_=1669268400306'
     username = "admin"
     password = "admin"
     response = requests.get(url, auth = HTTPBasicAuth(username, password))
@@ -173,9 +150,7 @@ def hdfsMemCommit():
 
 @app.get("/hdfs/processdisk")
 def hdfsProcessDisk():
-    url = 'http://10.207.26.20:8080/api/v1/clusters/gudanggaram/services/HDFS/components/DATANODE?fields=host_components/metrics/dfs/datanode/bytes_read,host_components/metrics/dfs/datanode/bytes_written,host_components/metrics/dfs/datanode/TotalReadTime,host_components/metrics/dfs/datanode/TotalWriteTime&format=null_padding&_=1669268400419'
-    username = "admin"
-    password = "admin"
+    url = 'http://'+baseurl+':8080/api/v1/clusters/'+cluster+'/services/HDFS/components/DATANODE?fields=host_components/metrics/dfs/datanode/bytes_read,host_components/metrics/dfs/datanode/bytes_written,host_components/metrics/dfs/datanode/TotalReadTime,host_components/metrics/dfs/datanode/TotalWriteTime&format=null_padding&_=1669268400419'
     response = requests.get(url, auth = HTTPBasicAuth(username, password))
 
     x = response.json()
@@ -183,9 +158,7 @@ def hdfsProcessDisk():
 
 @app.get("/hdfs/processnet")
 def hdfsProcessNet():
-    url = 'http://10.207.26.20:8080/api/v1/clusters/gudanggaram/services/HDFS/components/DATANODE?fields=host_components/metrics/dfs/datanode/RemoteBytesRead,host_components/metrics/dfs/datanode/reads_from_remote_client,host_components/metrics/dfs/datanode/RemoteBytesWritten,host_components/metrics/dfs/datanode/writes_from_remote_client&format=null_padding&_=1669268400463'
-    username = "admin"
-    password = "admin"
+    url = 'http://'+baseurl+':8080/api/v1/clusters/'+cluster+'/services/HDFS/components/DATANODE?fields=host_components/metrics/dfs/datanode/RemoteBytesRead,host_components/metrics/dfs/datanode/reads_from_remote_client,host_components/metrics/dfs/datanode/RemoteBytesWritten,host_components/metrics/dfs/datanode/writes_from_remote_client&format=null_padding&_=1669268400463'
     response = requests.get(url, auth = HTTPBasicAuth(username, password))
 
     x = response.json()
@@ -193,9 +166,7 @@ def hdfsProcessNet():
 
 @app.get("/hdfs/spaceutil")
 def hdfsSpaceUtil():
-    url = 'http://10.207.26.20:8080/api/v1/clusters/gudanggaram/services/HDFS/components/DATANODE?fields=host_components/metrics/FSDatasetState/org/apache/hadoop/hdfs/server/datanode/fsdataset/impl/FsDatasetImpl/Remaining,host_components/metrics/dfs/datanode/Capacity&format=null_padding&_=1669268400383'
-    username = "admin"
-    password = "admin"
+    url = 'http://'+baseurl+':8080/api/v1/clusters/'+cluster+'/services/HDFS/components/DATANODE?fields=host_components/metrics/FSDatasetState/org/apache/hadoop/hdfs/server/datanode/fsdataset/impl/FsDatasetImpl/Remaining,host_components/metrics/dfs/datanode/Capacity&format=null_padding&_=1669268400383'
     response = requests.get(url, auth = HTTPBasicAuth(username, password))
 
     x = response.json()
@@ -203,18 +174,14 @@ def hdfsSpaceUtil():
 
 @app.get("/hdfs/bytesr")
 def hdfsBytesRead():
-    url = 'http://10.207.26.20:8080/api/v1/clusters/gudanggaram/services/HDFS/components/DATANODE?fields=host_components/metrics/dfs/datanode/bytes_read&format=null_padding&_=1669268400355'
-    username = "admin"
-    password = "admin"
+    url = 'http://'+baseurl+':8080/api/v1/clusters/'+cluster+'/services/HDFS/components/DATANODE?fields=host_components/metrics/dfs/datanode/bytes_read&format=null_padding&_=1669268400355'
     response = requests.get(url, auth = HTTPBasicAuth(username, password))
 
     x = response.json()
     return x
 @app.get("/namenode/cpu")
 def namenodeCPU():
-    url = 'http://10.207.26.20:8080/api/v1/clusters/gudanggaram/components/?ServiceComponentInfo/component_name=APP_TIMELINE_SERVER|ServiceComponentInfo/category.in(MASTER,CLIENT)&fields=ServiceComponentInfo/service_name,host_components/HostRoles/display_name,host_components/HostRoles/host_name,host_components/HostRoles/public_host_name,host_components/HostRoles/state,host_components/HostRoles/maintenance_state,host_components/HostRoles/stale_configs,host_components/HostRoles/ha_state,host_components/HostRoles/desired_admin_state,,host_components/metrics/jvm/memHeapUsedM,host_components/metrics/jvm/HeapMemoryMax,host_components/metrics/jvm/HeapMemoryUsed,host_components/metrics/jvm/memHeapCommittedM,host_components/metrics/mapred/jobtracker/trackers_decommissioned,host_components/metrics/cpu/cpu_wio,host_components/metrics/rpc/client/RpcQueueTime_avg_time,host_components/metrics/dfs/FSNamesystem/*,host_components/metrics/dfs/namenode/Version,host_components/metrics/dfs/namenode/LiveNodes,host_components/metrics/dfs/namenode/DeadNodes,host_components/metrics/dfs/namenode/DecomNodes,host_components/metrics/dfs/namenode/TotalFiles,host_components/metrics/dfs/namenode/UpgradeFinalized,host_components/metrics/dfs/namenode/Safemode,host_components/metrics/runtime/StartTime,host_components/metrics/dfs/namenode/ClusterId,host_components/metrics/yarn/Queue,host_components/metrics/yarn/ClusterMetrics/NumActiveNMs,host_components/metrics/yarn/ClusterMetrics/NumLostNMs,host_components/metrics/yarn/ClusterMetrics/NumUnhealthyNMs,host_components/metrics/yarn/ClusterMetrics/NumRebootedNMs,host_components/metrics/yarn/ClusterMetrics/NumDecommissionedNMs&minimal_response=true&_=1670226192151'
-    username = "admin"
-    password = "admin"
+    url = 'http://'+baseurl+':8080/api/v1/clusters/'+cluster+'/components/?ServiceComponentInfo/component_name=APP_TIMELINE_SERVER|ServiceComponentInfo/category.in(MASTER,CLIENT)&fields=ServiceComponentInfo/service_name,host_components/HostRoles/display_name,host_components/HostRoles/host_name,host_components/HostRoles/public_host_name,host_components/HostRoles/state,host_components/HostRoles/maintenance_state,host_components/HostRoles/stale_configs,host_components/HostRoles/ha_state,host_components/HostRoles/desired_admin_state,,host_components/metrics/jvm/memHeapUsedM,host_components/metrics/jvm/HeapMemoryMax,host_components/metrics/jvm/HeapMemoryUsed,host_components/metrics/jvm/memHeapCommittedM,host_components/metrics/mapred/jobtracker/trackers_decommissioned,host_components/metrics/cpu/cpu_wio,host_components/metrics/rpc/client/RpcQueueTime_avg_time,host_components/metrics/dfs/FSNamesystem/*,host_components/metrics/dfs/namenode/Version,host_components/metrics/dfs/namenode/LiveNodes,host_components/metrics/dfs/namenode/DeadNodes,host_components/metrics/dfs/namenode/DecomNodes,host_components/metrics/dfs/namenode/TotalFiles,host_components/metrics/dfs/namenode/UpgradeFinalized,host_components/metrics/dfs/namenode/Safemode,host_components/metrics/runtime/StartTime,host_components/metrics/dfs/namenode/ClusterId,host_components/metrics/yarn/Queue,host_components/metrics/yarn/ClusterMetrics/NumActiveNMs,host_components/metrics/yarn/ClusterMetrics/NumLostNMs,host_components/metrics/yarn/ClusterMetrics/NumUnhealthyNMs,host_components/metrics/yarn/ClusterMetrics/NumRebootedNMs,host_components/metrics/yarn/ClusterMetrics/NumDecommissionedNMs&minimal_response=true&_=1670226192151'
     response = requests.get(url, auth = HTTPBasicAuth(username, password))
 
     x = response.json()
@@ -231,9 +198,7 @@ def namenodeCPU():
 
 @app.get("/namenode/rpc")
 def namenodeRPC():
-    url = 'http://10.207.26.20:8080/api/v1/clusters/gudanggaram/components/?ServiceComponentInfo/component_name=APP_TIMELINE_SERVER|ServiceComponentInfo/category.in(MASTER,CLIENT)&fields=ServiceComponentInfo/service_name,host_components/HostRoles/display_name,host_components/HostRoles/host_name,host_components/HostRoles/public_host_name,host_components/HostRoles/state,host_components/HostRoles/maintenance_state,host_components/HostRoles/stale_configs,host_components/HostRoles/ha_state,host_components/HostRoles/desired_admin_state,,host_components/metrics/jvm/memHeapUsedM,host_components/metrics/jvm/HeapMemoryMax,host_components/metrics/jvm/HeapMemoryUsed,host_components/metrics/jvm/memHeapCommittedM,host_components/metrics/mapred/jobtracker/trackers_decommissioned,host_components/metrics/cpu/cpu_wio,host_components/metrics/rpc/client/RpcQueueTime_avg_time,host_components/metrics/dfs/FSNamesystem/*,host_components/metrics/dfs/namenode/Version,host_components/metrics/dfs/namenode/LiveNodes,host_components/metrics/dfs/namenode/DeadNodes,host_components/metrics/dfs/namenode/DecomNodes,host_components/metrics/dfs/namenode/TotalFiles,host_components/metrics/dfs/namenode/UpgradeFinalized,host_components/metrics/dfs/namenode/Safemode,host_components/metrics/runtime/StartTime,host_components/metrics/dfs/namenode/ClusterId,host_components/metrics/yarn/Queue,host_components/metrics/yarn/ClusterMetrics/NumActiveNMs,host_components/metrics/yarn/ClusterMetrics/NumLostNMs,host_components/metrics/yarn/ClusterMetrics/NumUnhealthyNMs,host_components/metrics/yarn/ClusterMetrics/NumRebootedNMs,host_components/metrics/yarn/ClusterMetrics/NumDecommissionedNMs&minimal_response=true&_=1670226192151'
-    username = "admin"
-    password = "admin"
+    url = 'http://'+baseurl+':8080/api/v1/clusters/'+cluster+'/components/?ServiceComponentInfo/component_name=APP_TIMELINE_SERVER|ServiceComponentInfo/category.in(MASTER,CLIENT)&fields=ServiceComponentInfo/service_name,host_components/HostRoles/display_name,host_components/HostRoles/host_name,host_components/HostRoles/public_host_name,host_components/HostRoles/state,host_components/HostRoles/maintenance_state,host_components/HostRoles/stale_configs,host_components/HostRoles/ha_state,host_components/HostRoles/desired_admin_state,,host_components/metrics/jvm/memHeapUsedM,host_components/metrics/jvm/HeapMemoryMax,host_components/metrics/jvm/HeapMemoryUsed,host_components/metrics/jvm/memHeapCommittedM,host_components/metrics/mapred/jobtracker/trackers_decommissioned,host_components/metrics/cpu/cpu_wio,host_components/metrics/rpc/client/RpcQueueTime_avg_time,host_components/metrics/dfs/FSNamesystem/*,host_components/metrics/dfs/namenode/Version,host_components/metrics/dfs/namenode/LiveNodes,host_components/metrics/dfs/namenode/DeadNodes,host_components/metrics/dfs/namenode/DecomNodes,host_components/metrics/dfs/namenode/TotalFiles,host_components/metrics/dfs/namenode/UpgradeFinalized,host_components/metrics/dfs/namenode/Safemode,host_components/metrics/runtime/StartTime,host_components/metrics/dfs/namenode/ClusterId,host_components/metrics/yarn/Queue,host_components/metrics/yarn/ClusterMetrics/NumActiveNMs,host_components/metrics/yarn/ClusterMetrics/NumLostNMs,host_components/metrics/yarn/ClusterMetrics/NumUnhealthyNMs,host_components/metrics/yarn/ClusterMetrics/NumRebootedNMs,host_components/metrics/yarn/ClusterMetrics/NumDecommissionedNMs&minimal_response=true&_=1670226192151'
     response = requests.get(url, auth = HTTPBasicAuth(username, password))
 
     x = response.json()
@@ -250,9 +215,7 @@ def namenodeRPC():
 
 @app.get("/namenode/uptime")
 def namenodeRunTime():
-    url = 'http://10.207.26.20:8080/api/v1/clusters/gudanggaram/components/?ServiceComponentInfo/component_name=APP_TIMELINE_SERVER|ServiceComponentInfo/category.in(MASTER,CLIENT)&fields=ServiceComponentInfo/service_name,host_components/HostRoles/display_name,host_components/HostRoles/host_name,host_components/HostRoles/public_host_name,host_components/HostRoles/state,host_components/HostRoles/maintenance_state,host_components/HostRoles/stale_configs,host_components/HostRoles/ha_state,host_components/HostRoles/desired_admin_state,,host_components/metrics/jvm/memHeapUsedM,host_components/metrics/jvm/HeapMemoryMax,host_components/metrics/jvm/HeapMemoryUsed,host_components/metrics/jvm/memHeapCommittedM,host_components/metrics/mapred/jobtracker/trackers_decommissioned,host_components/metrics/cpu/cpu_wio,host_components/metrics/rpc/client/RpcQueueTime_avg_time,host_components/metrics/dfs/FSNamesystem/*,host_components/metrics/dfs/namenode/Version,host_components/metrics/dfs/namenode/LiveNodes,host_components/metrics/dfs/namenode/DeadNodes,host_components/metrics/dfs/namenode/DecomNodes,host_components/metrics/dfs/namenode/TotalFiles,host_components/metrics/dfs/namenode/UpgradeFinalized,host_components/metrics/dfs/namenode/Safemode,host_components/metrics/runtime/StartTime,host_components/metrics/dfs/namenode/ClusterId,host_components/metrics/yarn/Queue,host_components/metrics/yarn/ClusterMetrics/NumActiveNMs,host_components/metrics/yarn/ClusterMetrics/NumLostNMs,host_components/metrics/yarn/ClusterMetrics/NumUnhealthyNMs,host_components/metrics/yarn/ClusterMetrics/NumRebootedNMs,host_components/metrics/yarn/ClusterMetrics/NumDecommissionedNMs&minimal_response=true&_=1670226192151'
-    username = "admin"
-    password = "admin"
+    url = 'http://'+baseurl+':8080/api/v1/clusters/'+cluster+'/components/?ServiceComponentInfo/component_name=APP_TIMELINE_SERVER|ServiceComponentInfo/category.in(MASTER,CLIENT)&fields=ServiceComponentInfo/service_name,host_components/HostRoles/display_name,host_components/HostRoles/host_name,host_components/HostRoles/public_host_name,host_components/HostRoles/state,host_components/HostRoles/maintenance_state,host_components/HostRoles/stale_configs,host_components/HostRoles/ha_state,host_components/HostRoles/desired_admin_state,,host_components/metrics/jvm/memHeapUsedM,host_components/metrics/jvm/HeapMemoryMax,host_components/metrics/jvm/HeapMemoryUsed,host_components/metrics/jvm/memHeapCommittedM,host_components/metrics/mapred/jobtracker/trackers_decommissioned,host_components/metrics/cpu/cpu_wio,host_components/metrics/rpc/client/RpcQueueTime_avg_time,host_components/metrics/dfs/FSNamesystem/*,host_components/metrics/dfs/namenode/Version,host_components/metrics/dfs/namenode/LiveNodes,host_components/metrics/dfs/namenode/DeadNodes,host_components/metrics/dfs/namenode/DecomNodes,host_components/metrics/dfs/namenode/TotalFiles,host_components/metrics/dfs/namenode/UpgradeFinalized,host_components/metrics/dfs/namenode/Safemode,host_components/metrics/runtime/StartTime,host_components/metrics/dfs/namenode/ClusterId,host_components/metrics/yarn/Queue,host_components/metrics/yarn/ClusterMetrics/NumActiveNMs,host_components/metrics/yarn/ClusterMetrics/NumLostNMs,host_components/metrics/yarn/ClusterMetrics/NumUnhealthyNMs,host_components/metrics/yarn/ClusterMetrics/NumRebootedNMs,host_components/metrics/yarn/ClusterMetrics/NumDecommissionedNMs&minimal_response=true&_=1670226192151'
     response = requests.get(url, auth = HTTPBasicAuth(username, password))
 
     x = response.json()
@@ -269,9 +232,7 @@ def namenodeRunTime():
 
 @app.get("/namenode/hdfs")
 def namenodeHDFS():
-    url = 'http://10.207.26.20:8080/api/v1/clusters/gudanggaram/components/?ServiceComponentInfo/component_name=APP_TIMELINE_SERVER|ServiceComponentInfo/category.in(MASTER,CLIENT)&fields=ServiceComponentInfo/service_name,host_components/HostRoles/display_name,host_components/HostRoles/host_name,host_components/HostRoles/public_host_name,host_components/HostRoles/state,host_components/HostRoles/maintenance_state,host_components/HostRoles/stale_configs,host_components/HostRoles/ha_state,host_components/HostRoles/desired_admin_state,,host_components/metrics/jvm/memHeapUsedM,host_components/metrics/jvm/HeapMemoryMax,host_components/metrics/jvm/HeapMemoryUsed,host_components/metrics/jvm/memHeapCommittedM,host_components/metrics/mapred/jobtracker/trackers_decommissioned,host_components/metrics/cpu/cpu_wio,host_components/metrics/rpc/client/RpcQueueTime_avg_time,host_components/metrics/dfs/FSNamesystem/*,host_components/metrics/dfs/namenode/Version,host_components/metrics/dfs/namenode/LiveNodes,host_components/metrics/dfs/namenode/DeadNodes,host_components/metrics/dfs/namenode/DecomNodes,host_components/metrics/dfs/namenode/TotalFiles,host_components/metrics/dfs/namenode/UpgradeFinalized,host_components/metrics/dfs/namenode/Safemode,host_components/metrics/runtime/StartTime,host_components/metrics/dfs/namenode/ClusterId,host_components/metrics/yarn/Queue,host_components/metrics/yarn/ClusterMetrics/NumActiveNMs,host_components/metrics/yarn/ClusterMetrics/NumLostNMs,host_components/metrics/yarn/ClusterMetrics/NumUnhealthyNMs,host_components/metrics/yarn/ClusterMetrics/NumRebootedNMs,host_components/metrics/yarn/ClusterMetrics/NumDecommissionedNMs&minimal_response=true&_=1670226192151'
-    username = "admin"
-    password = "admin"
+    url = 'http://'+baseurl+':8080/api/v1/clusters/'+cluster+'/components/?ServiceComponentInfo/component_name=APP_TIMELINE_SERVER|ServiceComponentInfo/category.in(MASTER,CLIENT)&fields=ServiceComponentInfo/service_name,host_components/HostRoles/display_name,host_components/HostRoles/host_name,host_components/HostRoles/public_host_name,host_components/HostRoles/state,host_components/HostRoles/maintenance_state,host_components/HostRoles/stale_configs,host_components/HostRoles/ha_state,host_components/HostRoles/desired_admin_state,,host_components/metrics/jvm/memHeapUsedM,host_components/metrics/jvm/HeapMemoryMax,host_components/metrics/jvm/HeapMemoryUsed,host_components/metrics/jvm/memHeapCommittedM,host_components/metrics/mapred/jobtracker/trackers_decommissioned,host_components/metrics/cpu/cpu_wio,host_components/metrics/rpc/client/RpcQueueTime_avg_time,host_components/metrics/dfs/FSNamesystem/*,host_components/metrics/dfs/namenode/Version,host_components/metrics/dfs/namenode/LiveNodes,host_components/metrics/dfs/namenode/DeadNodes,host_components/metrics/dfs/namenode/DecomNodes,host_components/metrics/dfs/namenode/TotalFiles,host_components/metrics/dfs/namenode/UpgradeFinalized,host_components/metrics/dfs/namenode/Safemode,host_components/metrics/runtime/StartTime,host_components/metrics/dfs/namenode/ClusterId,host_components/metrics/yarn/Queue,host_components/metrics/yarn/ClusterMetrics/NumActiveNMs,host_components/metrics/yarn/ClusterMetrics/NumLostNMs,host_components/metrics/yarn/ClusterMetrics/NumUnhealthyNMs,host_components/metrics/yarn/ClusterMetrics/NumRebootedNMs,host_components/metrics/yarn/ClusterMetrics/NumDecommissionedNMs&minimal_response=true&_=1670226192151'
     response = requests.get(url, auth = HTTPBasicAuth(username, password))
 
     x = response.json()
@@ -288,9 +249,7 @@ def namenodeHDFS():
 
 @app.get("/namenode/heap")
 def namenodeHeap():
-    url = 'http://10.207.26.20:8080/api/v1/clusters/gudanggaram/components/?ServiceComponentInfo/component_name=APP_TIMELINE_SERVER|ServiceComponentInfo/category.in(MASTER,CLIENT)&fields=ServiceComponentInfo/service_name,host_components/HostRoles/display_name,host_components/HostRoles/host_name,host_components/HostRoles/public_host_name,host_components/HostRoles/state,host_components/HostRoles/maintenance_state,host_components/HostRoles/stale_configs,host_components/HostRoles/ha_state,host_components/HostRoles/desired_admin_state,,host_components/metrics/jvm/memHeapUsedM,host_components/metrics/jvm/HeapMemoryMax,host_components/metrics/jvm/HeapMemoryUsed,host_components/metrics/jvm/memHeapCommittedM,host_components/metrics/mapred/jobtracker/trackers_decommissioned,host_components/metrics/cpu/cpu_wio,host_components/metrics/rpc/client/RpcQueueTime_avg_time,host_components/metrics/dfs/FSNamesystem/*,host_components/metrics/dfs/namenode/Version,host_components/metrics/dfs/namenode/LiveNodes,host_components/metrics/dfs/namenode/DeadNodes,host_components/metrics/dfs/namenode/DecomNodes,host_components/metrics/dfs/namenode/TotalFiles,host_components/metrics/dfs/namenode/UpgradeFinalized,host_components/metrics/dfs/namenode/Safemode,host_components/metrics/runtime/StartTime,host_components/metrics/dfs/namenode/ClusterId,host_components/metrics/yarn/Queue,host_components/metrics/yarn/ClusterMetrics/NumActiveNMs,host_components/metrics/yarn/ClusterMetrics/NumLostNMs,host_components/metrics/yarn/ClusterMetrics/NumUnhealthyNMs,host_components/metrics/yarn/ClusterMetrics/NumRebootedNMs,host_components/metrics/yarn/ClusterMetrics/NumDecommissionedNMs&minimal_response=true&_=1670226192151'
-    username = "admin"
-    password = "admin"
+    url = 'http://'+baseurl+':8080/api/v1/clusters/'+cluster+'/components/?ServiceComponentInfo/component_name=APP_TIMELINE_SERVER|ServiceComponentInfo/category.in(MASTER,CLIENT)&fields=ServiceComponentInfo/service_name,host_components/HostRoles/display_name,host_components/HostRoles/host_name,host_components/HostRoles/public_host_name,host_components/HostRoles/state,host_components/HostRoles/maintenance_state,host_components/HostRoles/stale_configs,host_components/HostRoles/ha_state,host_components/HostRoles/desired_admin_state,,host_components/metrics/jvm/memHeapUsedM,host_components/metrics/jvm/HeapMemoryMax,host_components/metrics/jvm/HeapMemoryUsed,host_components/metrics/jvm/memHeapCommittedM,host_components/metrics/mapred/jobtracker/trackers_decommissioned,host_components/metrics/cpu/cpu_wio,host_components/metrics/rpc/client/RpcQueueTime_avg_time,host_components/metrics/dfs/FSNamesystem/*,host_components/metrics/dfs/namenode/Version,host_components/metrics/dfs/namenode/LiveNodes,host_components/metrics/dfs/namenode/DeadNodes,host_components/metrics/dfs/namenode/DecomNodes,host_components/metrics/dfs/namenode/TotalFiles,host_components/metrics/dfs/namenode/UpgradeFinalized,host_components/metrics/dfs/namenode/Safemode,host_components/metrics/runtime/StartTime,host_components/metrics/dfs/namenode/ClusterId,host_components/metrics/yarn/Queue,host_components/metrics/yarn/ClusterMetrics/NumActiveNMs,host_components/metrics/yarn/ClusterMetrics/NumLostNMs,host_components/metrics/yarn/ClusterMetrics/NumUnhealthyNMs,host_components/metrics/yarn/ClusterMetrics/NumRebootedNMs,host_components/metrics/yarn/ClusterMetrics/NumDecommissionedNMs&minimal_response=true&_=1670226192151'
     response = requests.get(url, auth = HTTPBasicAuth(username, password))
 
     x = response.json()
