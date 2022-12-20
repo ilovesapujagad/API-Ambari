@@ -445,7 +445,7 @@ def metricsavgmemoryusage():
     e = int(time.mktime(time.strptime(d,p))) - 3600
     z = str(a)
     x = str(e)
-    url='http://'+baseurl+':8080/api/v1/clusters/'+cluster+'/?fields=metrics/memory/Buffer._avg["+x+","+z+",15],metrics/memory/Cache._avg["+x+","+z+",15],metrics/memory/Share._avg["+x+","+z+",15],metrics/memory/Swap._avg["+x+","+z+",15],metrics/memory/Total._avg["+x+","+z+",15],metrics/memory/Use._avg['+x+','+z+',15]&_='+z+''
+    url="http://"+baseurl+":8080/api/v1/clusters/"+cluster+"/?fields=metrics/memory/Buffer._avg["+x+","+z+",15],metrics/memory/Cache._avg["+x+","+z+",15],metrics/memory/Share._avg["+x+","+z+",15],metrics/memory/Swap._avg["+x+","+z+",15],metrics/memory/Total._avg["+x+","+z+",15],metrics/memory/Use._avg["+x+","+z+",15]&_="+z+""
     response = requests.get(url, auth=(username, password))
     # print(response.status_code)
     return response.json()
