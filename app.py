@@ -103,7 +103,7 @@ def urlDownload(path):
         
         return send_file(memory_file, attachment_filename=last, as_attachment=True)
     else:   
-        url = 'http://'+baseurl+':80800/api/v1/views/FILES/versions/1.0.0/instances/hdfs_viewer/resources/files/download/browse?path=/' + path + '&download=true'
+        url = 'http://'+baseurl+':8080/api/v1/views/FILES/versions/1.0.0/instances/hdfs_viewer/resources/files/download/browse?path=/' + path + '&download=true'
         response = requests.get(url, auth = HTTPBasicAuth(username, password))
         x = path 
         last = x.rsplit('/', 1)[-1]
