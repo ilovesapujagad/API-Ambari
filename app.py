@@ -284,7 +284,7 @@ def restart():
 @app.put("/hdfs/stop")
 def stop():
     url="http://"+baseurl+":8080/api/v1/clusters/"+cluster+"/services/HDFS"
-    payload = '{"RequestInfo":{"context":"_PARSE_.STOP.HDFS","operation_level":{"level":"SERVICE","cluster_name":"gudanggaram","service_name":"HDFS"}},"Body":{"ServiceInfo":{"state":"INSTALLED"}}}'
+    payload = '{"RequestInfo":{"context":"_PARSE_.STOP.HDFS","operation_level":{"level":"SERVICE","cluster_name":"'+cluster+'","service_name":"HDFS"}},"Body":{"ServiceInfo":{"state":"INSTALLED"}}}'
     response = requests.put(url, auth=(username, password), data=payload)
     # print(response.status_code)
     return response.json()
@@ -292,7 +292,7 @@ def stop():
 @app.put("/hdfs/start")
 def start():
     url="http://"+baseurl+":8080/api/v1/clusters/"+cluster+"/services/HDFS"
-    payload = '{"RequestInfo":{"context":"_PARSE_.START.HDFS","operation_level":{"level":"SERVICE","cluster_name":"gudanggaram","service_name":"HDFS"}},"Body":{"ServiceInfo":{"state":"STARTED"}}}'
+    payload = '{"RequestInfo":{"context":"_PARSE_.START.HDFS","operation_level":{"level":"SERVICE","cluster_name":"'+cluster+'","service_name":"HDFS"}},"Body":{"ServiceInfo":{"state":"STARTED"}}}'
     response = requests.put(url, auth=(username, password), data=payload)
     # print(response.status_code)
     return response.json()
