@@ -90,7 +90,7 @@ def urlDownload(path):
                 "entries":["/"+ path]}
         response= requests.post(url, json=data, auth = HTTPBasicAuth(username, password))
         x = response.json()
-        url1='http:/'+baseurl+':8080/api/v1/views/FILES/versions/1.0.0/instances/hdfs_viewer/resources/files/download/zip?requestId='
+        url1='http://'+baseurl+':8080/api/v1/views/FILES/versions/1.0.0/instances/hdfs_viewer/resources/files/download/zip?requestId='
         url1 += x['requestId']
         response1 = requests.get(url1, auth = HTTPBasicAuth(username, password))
 
