@@ -474,6 +474,17 @@ def heatmaps():
     a = x['items']
     return a 
 
+@app.put("/hdfs/upload")
+def hdfsupload():
+    path = request.form['path']
+    filex = request.files['file']
+    url = 'http://10.10.65.1:8080/api/v1/views/FILES/versions/1.0.0/instances/hdfs_viewer/resources/files/upload'
+    username = "sapujagad"
+    password = "kayangan"
+    response = requests.put(url, auth=(username, password) ,files={'file': (filex.filename, filex.read(), filex.content_type)} ,  data={'path': str(path)})
+    x = response.json()
+    return x 
+
 @app.get("/pythonPackage")
 def pythonPackage():
     client = SSHClient()
