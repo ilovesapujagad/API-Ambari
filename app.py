@@ -17,10 +17,10 @@ if api_key == "":
 
 api_base_url = "https://api.stagingv3.microgen.id/query/api/v1/" + api_key
 #baseurl= "10.207.26.20"
-baseurl= "10.10.65.1"
-username= "sapujagad"
-password=  "kayangan"
-cluster = "sapujagad"
+baseurl  = os.environ.get("BASEURL", "")
+username = os.environ.get("USERNAME", "")
+password = os.environ.get("PASSWORD", "")
+cluster  = os.environ.get("CLUSTER", "")
 @app.route('/')
 def hello_geek():
     return '<h1>Hello from Flask</h2>'
